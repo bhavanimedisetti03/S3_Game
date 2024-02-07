@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let cardsChosen = [];
     let cardsChosenId = [];
     let cardsWon = [];
+    let score = 0;
 
     const cardArray = [
         { name: 'card1', img: 'images/distracted.png' },
@@ -27,6 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
         shuffle(cardArray);
         grid.innerHTML = '';
         cardsWon = [];
+        score = 0;
+        updateScoreDisplay();
 
         for (let i = 0; i < cardArray.length; i++) {
             const card = document.createElement('img');
@@ -60,17 +63,25 @@ document.addEventListener('DOMContentLoaded', () => {
             cards[firstCardId].removeEventListener('click', flipCard);
             cards[secondCardId].removeEventListener('click', flipCard);
             cardsWon.push(cardsChosen);
+            score += 10; // Increment score for each match
         } else {
             cards[firstCardId].setAttribute('src', 'images/blank.png');
             cards[secondCardId].setAttribute('src', 'images/blank.png');
+            score -= 2; // Decrement score for each mismatch
         }
 
         cardsChosen = [];
         cardsChosenId = [];
+        updateScoreDisplay();
 
         if (cardsWon.length === cardArray.length / 2) {
             alert('Congratulations! You found them all!');
         }
+    }
+
+    function updateScoreDisplay() {
+        const scoreDisplay = document.getElementById('score');
+        scoreDisplay.textContent = `Score: ${score}`;
     }
 
     startButton.addEventListener('click', createBoard);
