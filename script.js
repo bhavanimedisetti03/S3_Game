@@ -1,12 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     const grid = document.querySelector('#game-board');
     const startButton = document.getElementById('start-game');
-    const timerDisplay = document.getElementById('timer'); // Add this line to get reference to timer display element
+    const timerDisplay = document.getElementById('timer');
     let cardsChosen = [];
     let cardsChosenId = [];
     let cardsWon = [];
-    let timer;
-    let timeRemaining = 60; // Set the initial time remaining in seconds
+    let timer; // Timer variable
 
     const cardArray = [
         { name: 'card1', img: 'images/distracted.png' },
@@ -79,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startTimer() {
+        let timeRemaining = 60; // Initialize time remaining
         timer = setInterval(() => {
             timeRemaining--;
             if (timeRemaining < 0) {
@@ -86,11 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Time is up! Game over.');
                 return;
             }
-            updateTimerDisplay();
+            updateTimerDisplay(timeRemaining); // Pass timeRemaining to updateTimerDisplay
         }, 1000); // Update the timer display every second
     }
 
-    function updateTimerDisplay() {
+    function updateTimerDisplay(timeRemaining) {
         const minutes = Math.floor(timeRemaining / 60);
         const seconds = timeRemaining % 60;
         timerDisplay.textContent = `Time: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
@@ -98,3 +98,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     startButton.addEventListener('click', createBoard);
 });
+
